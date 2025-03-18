@@ -13,8 +13,12 @@ redis.on('error', (err) => {
   logger.error(`Redis error: ${err}`);
 });
 
+redis.on('connecting', () => {
+  logger.info('Connecting to redis server...');
+});
+
 redis.on('connect', () => {
-  logger.info('Connected to Redis');
+  logger.info('Connected to redis server');
 });
 
 

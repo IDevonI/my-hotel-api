@@ -1,6 +1,6 @@
 import mysql, { RowDataPacket } from 'mysql2/promise';
 import { config } from '../config';
-import { logger } from 'src/utils/logger';
+import { logger } from '../utils/logger';
 
 const pool = mysql.createPool({
     host: config.database.host,
@@ -15,12 +15,13 @@ const pool = mysql.createPool({
 
 export const queryDB = async <T>(query: string, values: any[] = []): Promise<T[]> => {
     const connection = await pool.getConnection();
+
     try {
         const [rows] = await connection.execute<T[] & RowDataPacket[]>(query, values);
         return rows;
     }
     catch (error: any) {
-        logger.error(`Error executing query: ${error.message}`);
+        logger.error(`Error executing query: ${error}`);
         throw new Error(error);
     } finally {
         connection.release();

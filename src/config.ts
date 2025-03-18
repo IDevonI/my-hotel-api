@@ -1,10 +1,6 @@
-import dotenv from 'dotenv';
-import path from 'path';
 import { logger } from './utils/logger';
 
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
-
-const requiredVariables = ['PORT', 'NODE_ENV', 'JWT_SECRET', 'BCRYPT_SALT_ROUNDS', 'DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'REDIS_HOST'];
+const requiredVariables = ['PORT', 'NODE_ENV', 'JWT_SECRET', 'DB_HOST', 'DB_PORT', 'DB_USER', 'DB_PASSWORD', 'DB_NAME', 'REDIS_HOST', 'REDIS_PORT', 'REDIS_PASSWORD', 'REDIS_DB'];
 const missingVariables = requiredVariables.filter(variable => !process.env[variable]);
 
 if (missingVariables.length) {
@@ -13,7 +9,7 @@ if (missingVariables.length) {
 
 
 export const config = {
-  port: process.env.PORT || 3000,
+  port: process.env.PORT || 3001,
   environment: process.env.NODE_ENV || 'development',
   rateLimit: {
     windowMs: 15 * 60 * 1000,
@@ -22,8 +18,8 @@ export const config = {
   jwt: {
     secret: process.env.JWT_SECRET || '0d6d12a019b3ea51e884adca36f114fc518dd486f4b84831c17047dc5655ba24',
     accessTokenExpiration: '15m',
-    refreshTokenExpiration: '7d',
-    bcryptSaltRounds: parseInt(process.env.BCRYPT_SALT_ROUNDS || '10', 10)
+    refreshSecret: process.env.REFRESH_SECRET || '98cefecfc2d1450e6fd6847c2d0e0554d74ed9a918b35e5b4f8426d2f862a4dc',
+    refreshTokenExpiration: '7d'
   },
   database: {
     host: process.env.DB_HOST || 'localhost',
@@ -37,13 +33,13 @@ export const config = {
   },
   redis: {
     host: process.env.REDIS_HOST || 'localhost',
-    port: parseInt(process.env.REDIS_PORT || '6379'),
+    port: parseInt(process.env.REDIS_PORT || '6410'),
     password: process.env.REDIS_PASSWORD || '',
     db: parseInt(process.env.REDIS_DB || '0')
   },
   cuid: {
     length: 16,
-    fingerprint: '87d53516bbb2d3a543e2fd902a9b017b15010e6b1ca9c67b108cbc176170f000'
+    fingerprint: 'okDIefPh1Z0qQgGUunZBbefisf8lM4Hb'
   },
 } as const;
 

@@ -1,7 +1,7 @@
 import { QueryResult } from 'mysql2';
 import { queryDB } from './db';
 import { AuthInfo, User } from '../types/users';
-import { getCache, setCache } from 'src/utils/redis';
+import { getCache, setCache } from '../utils/redis';
 
 
 export const getAuthInfo = async (email: string): Promise<AuthInfo | null> => {
